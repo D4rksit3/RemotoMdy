@@ -1,8 +1,10 @@
+#encoding="utf-8"   
 import urllib.request as urllib
 from datetime import date
 from datetime import datetime
 import urllib, sys, socket, time, os, subprocess 
-import pymysql
+import mysql.connector
+
 import tkinter as tk
 #from tkinter import *
 
@@ -55,7 +57,12 @@ ip_equipo = s.getsockname()[0]
 hostname = socket.gethostname()
 
 #Base de datos
-db = pymysql.connect('localhost','root','','ipcc')
+db = mysql.connector.connect(
+  host="192.168.1.34",
+  user="root",
+  passwd="password",
+  db="ipcc",
+  charset="utf8")
 cursor = db.cursor()
 
 #cursor1 = conect.cursor()
@@ -72,10 +79,17 @@ def obtener_ip():
     sql = f"INSERT INTO datos_maquina(ip_equipo,ip_publico,ip_remoto,hostname,fecha) values('{ip_equipo}','{ip_publico}','{ip_remoto}','{hostname}','{now}')"
     cursor.execute(sql)
     db.commit()
+    cursor.close()
+    db.close()
+
+
+    #ping = f"ping {ip_remoto}"
+
+    #if ping == "bytes=32 tiempo=10ms TTL=64":
+    #    print("Sucefull!")
     
-    
-    
-    subprocess.run(f"sudo.exe ps\\PsExec.exe \\\\{ip_remoto} -u administrador -p @C0l0n14l# -s cmd")
+    #subprocess.run("ps\\PsExec.exe -accepteula")
+    subprocess.run(f"cmd ps\\PsExec.exe \\\\{ip_remoto} -u administrador -p @C0l0n14l# -s cmd")
     
     return var.set(ip_remoto)
 def cerrar():
