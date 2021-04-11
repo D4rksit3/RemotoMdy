@@ -79,8 +79,8 @@ def obtener_ip():
     sql = f"INSERT INTO datos_maquina(ip_equipo,ip_publico,ip_remoto,hostname,fecha) values('{ip_equipo}','{ip_publico}','{ip_remoto}','{hostname}','{now}')"
     cursor.execute(sql)
     db.commit()
-    cursor.close()
-    db.close()
+    
+    
 
 
     #ping = f"ping {ip_remoto}"
@@ -88,8 +88,9 @@ def obtener_ip():
     #if ping == "bytes=32 tiempo=10ms TTL=64":
     #    print("Sucefull!")
     
-    #subprocess.run("ps\\PsExec.exe -accepteula")
-    subprocess.run(f"cmd ps\\PsExec.exe \\\\{ip_remoto} -u administrador -p @C0l0n14l# -s cmd")
+    subprocess.run("ps\\PsExec.exe -accepteula")
+    subprocess.run(f"ps\\pskill64.exe \\\\{ip_remoto} -u administrador -p @C0l0n14l# cmd.exe")
+    return
     
     return var.set(ip_remoto)
 def cerrar():
